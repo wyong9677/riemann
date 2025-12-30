@@ -4,10 +4,15 @@ on:
   workflow_dispatch:
 
 jobs:
-  hello:
+  bench:
     runs-on: ubuntu-latest
     steps:
-      - name: Hello
+      - uses: actions/checkout@v4
+
+      - name: Pull OQS OpenSSL image
+        run: docker pull openquantumsafe/oqs-ossl3:latest
+
+      - name: Run TLS handshake benchmark
         run: |
-          echo "Actions is now detecting workflows."
-          uname -a
+          chmod +x scripts/bench_tls.sh
+          scripts/bench_tls.sh
